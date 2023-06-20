@@ -9,7 +9,7 @@ interface Game {
 
 interface FetchGamesResponse {
   count: number;
-  result: Game[];
+  results: Game[];
 }
 
 const GameGrid = () => {
@@ -18,20 +18,18 @@ const GameGrid = () => {
 
   useEffect(() => {
     apiClient
-      .get<FetchGamesResponse>("/games")
-      .then((res) => setGames(res.data.result))
-      .catch((err) => setError(err.massage));
+      .get<FetchGamesResponse>('/games')
+      .then((res) => setGames(res.data.results))
+      .catch((err) => setError(err.message));
   });
 
   return (
     <>
       {error && <Text>{error}</Text>}
       <ul>
-        {games && games.length > 0 ? (
+        {
           games.map((game) => <li key={game.id}>{game.name}</li>)
-        ) : (
-          <li>No games found.</li>
-        )}
+        }
       </ul>
     </>
   );
